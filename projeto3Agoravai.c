@@ -10,11 +10,11 @@
 #include <string.h>
 
 typedef struct contato {
-  char name[100];
-  char cel[10];
-  char adress[100];
+  char name[101];
+  char cel[11];
+  char adress[101];
   int cep;
-  char date[3];
+  char date[11];
 
   struct contato *prox;
   struct contato *ante;
@@ -169,12 +169,19 @@ Contato *newInsert(Contato *list){
 
   printf("Insira o CEP do novo contato:\n");
   scanf("%u",&newData->cep);
-  getchar();
+  //getchar();
   // leString (newData->cep);
 
   printf("Insira a data de nascimento do novo contato:\n");
   scanf("%[]",newData->date);
   leString (newData->date);
+
+  printf(newData, "%[^\n]\n%s\n%[^\n]\n%u\n%s\n%c\n",
+         newData->name,
+         newData->cel,
+         newData->adress,
+         newData->cep,
+         newData->date);
 
   list = insertSort(list, newData);
   return list;
