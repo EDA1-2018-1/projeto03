@@ -23,6 +23,7 @@ typedef struct contato {
 Contato *readFile();
 Contato *newInsert(Contato *list);
 Contato *insertSort(Contato *position, Contato *list);
+void leString (char * s);
 
 int main() {
   Contato *list;
@@ -73,6 +74,21 @@ int main() {
 
   } while(sel != 0);
   return 0;
+}
+
+void leString (char * s){
+	int i;
+	i = getchar();
+
+	if(i == '\n'){
+		i = getchar();
+	}
+	while (i != '\n'){
+		*s = i;
+		++s;
+		i = getchar();
+	}
+	s = '\0';
 }
 
 Contato *readFile(){
@@ -140,19 +156,25 @@ Contato *newInsert(Contato *list){
   }
 
   printf("Insira o nome do novo contato:\n");
-  scanf("%[^\n]",newData->name);
+  scanf("%[]",newData->name);
+  leString (newData->name);
 
   printf("Insira o telefone do novo contato:\n");
-  scanf("%[^\n]",newData->cel);
+  scanf("%[]",newData->cel);
+  leString (newData->cel);
 
   printf("Insira o endereco do novo contato:\n");
-  scanf("%[^\n]",newData->adress);
+  scanf("%[]",newData->adress);
+  leString (newData->adress);
 
   printf("Insira o CEP do novo contato:\n");
   scanf("%u",&newData->cep);
+  getchar();
+  // leString (newData->cep);
 
   printf("Insira a data de nascimento do novo contato:\n");
-  scanf("%[^\n]",newData->date);
+  scanf("%[]",newData->date);
+  leString (newData->date);
 
   list = insertSort(list, newData);
   return list;
