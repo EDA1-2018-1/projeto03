@@ -28,30 +28,38 @@ typedef struct contato
 
 int main(int argc, char const *argv[])
 {
-  FILE *arq;                        /*IMPLEMENTAR FUNÇÃO PRA LER ARQUIVO*/
-  char Linha[100];
-  char *result;
-  int i;
 
-  arq = fopen("contatos.txt", "r");
-  if (arq == NULL)
-  {
-     printf("Problemas na abertura do arquivo\n");
-     return;
-  }
-  i = 1;
-  while (!feof(arq))
-  {
-      result = fgets(Linha, 100, arq);  // o 'fgets' lê até 99 caracteres ou até o '\n'
-      if (result)  // Se foi possível ler
-	    printf("Linha %d : %s",i,Linha);
-      i++;
-  }
-  fclose(arq);
 return 0;
 }
 
 /*--------------------------------------------------------------------------*/
+void ler_arquivo(/* arguments */)
+  {
+    FILE *arq;                        /*IMPLEMENTAR FUNÇÃO PRA LER ARQUIVO*/
+    char Linha[100];
+    char *result;
+    int i;
+
+    arq = fopen("contatos.txt", "r+");
+    if (arq == NULL)
+      {
+       printf("Problemas na abertura do arquivo\n");
+       return;
+      }
+    else
+      {
+        while (!feof(arq))
+          {
+            // usar fscanf(fp, “%d”, &numero);
+            result = fgets(Linha, 100, arq);  // o 'fgets' lê até 99 caracteres ou até o '\n'
+            if (result)  // Se foi possível ler
+            printf("Linha %d : %s",i,Linha);
+            i++;
+          }
+      }
+    fclose(arq);
+  }
+//----------------------------------------------------------------------------
 int menu(void)
 {
 	int opt;
@@ -179,7 +187,7 @@ void imprime (Contato *le) //tem que refatorar
     aux = *atual;
     printf("Imprimindo lista:\n");
     do{
-        printf("%d ", aux->info);
+        printf("%d ", aux->info);    int i;
         aux = aux->prox;
     }while(aux != *atual);
     printf("\n");
@@ -219,10 +227,10 @@ Contato *retira(Contato *le)//FAZER ESSA FUNÇÃO
 	}
 }
 //-----------------------------------------------------------------------------
-void limpa(node *le)//FAZER ESSA FUNÇÃO
+void limpa(Contato *le)//FAZER ESSA FUNÇÃO
 {
 	if(!vazia(le)){
-		node *proxNode,
+		Contato *proxNode,
 			  *atual;
 
 		atual = le->prox;
