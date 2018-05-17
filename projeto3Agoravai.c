@@ -24,6 +24,7 @@ Contato *readFile();
 Contato *newInsert(Contato *list);
 Contato *insertSort(Contato *position, Contato *list);
 void leString (char * s);
+void save(Contato *list);
 
 int main() {
   Contato *list;
@@ -145,6 +146,7 @@ Contato *insertSort(Contato *position, Contato *data){
       return position;
     }
   }
+  save(data);
 }
 
 Contato *newInsert(Contato *list){
@@ -156,33 +158,51 @@ Contato *newInsert(Contato *list){
   }
 
   printf("Insira o nome do novo contato:\n");
-  scanf("%[]",newData->name);
+  scanf("%[^\n]",newData->name);
   leString (newData->name);
 
   printf("Insira o telefone do novo contato:\n");
-  scanf("%[]",newData->cel);
+  scanf("%[^\n]",newData->cel);
   leString (newData->cel);
 
   printf("Insira o endereco do novo contato:\n");
-  scanf("%[]",newData->adress);
+  scanf("%[^\n]",newData->adress);
   leString (newData->adress);
 
   printf("Insira o CEP do novo contato:\n");
   scanf("%u",&newData->cep);
-  //getchar();
-  // leString (newData->cep);
 
   printf("Insira a data de nascimento do novo contato:\n");
-  scanf("%[]",newData->date);
+  scanf("%[^\n]",newData->date);
   leString (newData->date);
 
-  printf(newData, "%[^\n]\n%s\n%[^\n]\n%u\n%s\n%c\n",
-         newData->name,
-         newData->cel,
-         newData->adress,
-         newData->cep,
-         newData->date);
-
   list = insertSort(list, newData);
+  free(newData);
   return list;
+}
+
+void save(Contato *list){
+  FILE *fp;
+  Contato *num;
+
+  if(fp = fopen("contatos.txt", "r+"), fp == NULL){
+    printf("Falha ao abrir o arquivo!\n");
+    exit(1);
+  }
+
+  for(num=list; num != NULL; num = num->prox){
+    fprintf(fp, "%s\n", num->name);
+    fprintf(fp, "%s\n", num->cel);
+    fprintf(fp, "%s\n", num->adress);
+    fprintf(fp, "%d\n", num->cep);
+    fprintf(fp, "%s\n", num->date);
+    fprintf(fp, "$\n");
+
+    if(num != list){
+      free(num->ante);
+    }
+  }
+
+  free(num);
+  fclose(fp);
 }
