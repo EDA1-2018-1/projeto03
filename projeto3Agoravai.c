@@ -27,6 +27,7 @@ void leString (char * s);
 void save(Contato *list);
 
 int main() {
+  FILE *fp;
   Contato *list;
   int sel;
   char c;
@@ -34,6 +35,7 @@ int main() {
   if(list = (Contato*)malloc(sizeof(Contato)), list == NULL){
     printf("Erro ao alocar!\n");
   }
+
   list = readFile();
   system("clear");
 
@@ -52,7 +54,6 @@ int main() {
 
     switch(sel){
       case 1:
-        printf("\n");
         list = newInsert(list);
       break;
 
@@ -67,13 +68,12 @@ int main() {
       case 4:
         printf("\n");
       break;
-
-
     }
 
     system("clear");
 
   } while(sel != 0);
+
   return 0;
 }
 
@@ -177,7 +177,6 @@ Contato *newInsert(Contato *list){
   leString (newData->date);
 
   list = insertSort(list, newData);
-  free(newData);
   return list;
 }
 
@@ -185,7 +184,7 @@ void save(Contato *list){
   FILE *fp;
   Contato *num;
 
-  if(fp = fopen("contatos.txt", "r+"), fp == NULL){
+  if(fp = fopen("contatos.txt", "a"), fp == NULL){
     printf("Falha ao abrir o arquivo!\n");
     exit(1);
   }
